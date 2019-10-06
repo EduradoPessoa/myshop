@@ -34,7 +34,7 @@ gem 'carrierwave'
 gem 'rails_admin_rollincode', '~> 1.0'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
-gem 'bootstrap-sass', '3.3.6'
+gem 'bootstrap-sass', '3.4.1'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
