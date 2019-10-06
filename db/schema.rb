@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_10_03_220745) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "addresses", force: :cascade do |t|
     t.string "country"
     t.string "city"
@@ -19,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
     t.string "neighborhood"
     t.string "street"
     t.string "number"
-    t.integer "client_id"
+    t.bigint "client_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
     t.string "document"
     t.string "email"
     t.string "phone"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.text "notes"
     t.integer "status"
     t.datetime "created_at", null: false
@@ -41,9 +44,9 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
   end
 
   create_table "comissions", force: :cascade do |t|
-    t.integer "sale_id"
+    t.bigint "sale_id"
     t.decimal "value"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.integer "status"
     t.text "note"
     t.datetime "created_at", null: false
@@ -63,9 +66,9 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
   end
 
   create_table "product_quantities", force: :cascade do |t|
-    t.integer "product_id"
+    t.bigint "product_id"
     t.integer "quantity"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sale_id"
@@ -84,10 +87,10 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.integer "client_id"
+    t.bigint "client_id"
     t.date "sale_date"
-    t.integer "user_id"
-    t.integer "discount_id"
+    t.bigint "user_id"
+    t.bigint "discount_id"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -113,4 +116,13 @@ ActiveRecord::Schema.define(version: 2019_10_03_220745) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "addresses", "clients"
+  add_foreign_key "clients", "users"
+  add_foreign_key "comissions", "sales"
+  add_foreign_key "comissions", "users"
+  add_foreign_key "product_quantities", "products"
+  add_foreign_key "product_quantities", "users"
+  add_foreign_key "sales", "clients"
+  add_foreign_key "sales", "discounts"
+  add_foreign_key "sales", "users"
 end
